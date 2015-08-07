@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<svg min-width="300" min-height="150">
+   <xul:vbox>
+      <xul:hbox height="15"/>
+      <xul:hbox height="15">
+         <xul:text y="10" height="15" value="Water Depth:"/>
+         <xul:text y="10" height="15" binding="/bathtub/@water_depth"/>
+      </xul:hbox>
+      <xul:hbox height="15">
+         <xul:text y="10" height="15" value="Water Temperature:"/>
+         <xul:text y="10" height="15" binding="/bathtub/@water_temperature"/>
+      </xul:hbox>
+      <xul:hbox height="15">
+         <xul:text y="10" height="15" value="Air Temperature:"/>
+         <xul:text y="10" height="15" binding="/bathtub/@air_temperature"/>
+      </xul:hbox>
+      <xul:hbox height="15"/>
+      <xul:hbox height="22">
+         <xul:text value="Dummy"/>
+         <xul:menulist>
+   	        <xul:menupopup>
+  		       <xul:menuitem label="itemA"/>
+  		       <xul:menuitem label="itemB"/>
+   	        </xul:menupopup>			   
+		 </xul:menulist>
+      </xul:hbox>
+      <xul:hbox height="22">
+         <xul:text y="10" value="Active"/>
+         <xul:checkbox y="10" binding="/bathtub/bath-control/@active"/>
+      </xul:hbox>
+      <xul:hbox height="22">
+         <xul:text y="10" value="Temperature"/>
+         <xul:textbox y="10" binding="/bathtub/bath-control/@temperature"/>
+      </xul:hbox>
+      <xul:hbox height="22">
+         <xul:text y="10" value="Depth"/>
+         <xul:textbox y="10" binding="/bathtub/bath-control/@depth"/>
+      </xul:hbox>
+   </xul:vbox>
+</svg>

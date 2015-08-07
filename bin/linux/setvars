@@ -1,0 +1,6 @@
+export KEYSTONE_DIR=/usr/local/keystone
+export KEYSTONE_TARGET=linux
+export SUFFIX_OBJ=o
+export SUFFIX_LIB=a
+export PATH=$PATH:/usr/local/keystone/bin/linux
+

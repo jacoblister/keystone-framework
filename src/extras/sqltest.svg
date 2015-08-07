@@ -1,0 +1,30 @@
+<svg min-width="800" min-height="600">
+   <xul:vbox>
+      <xul:hbox height="22">
+         <xul:text width="120" value="database name"/>
+         <xul:textbox disabled="true" flex="1" binding="@database_name"/>
+      </xul:hbox>
+      <xul:hbox height="88">
+         <xul:text width="120" value="SQL Query"/>
+         <xul:textbox flex="1" binding="@sql_query" multiline="true"/>
+         <xul:button label="execute" width="80" flex="1" binding="@sql_execute"/>
+      </xul:hbox>
+      <xul:hbox height="22">
+         <xul:text width="120" value="last error"/>
+         <xul:textbox disabled="true" flex="1" binding="@sql_error"/>
+      </xul:hbox>
+      <xul:gridedit>
+<!--      
+         <xul:gridcolumns>
+            <xul:gridcolumn width="160" heading="Time" editable="false"/>
+            <xul:gridcolumn width="80" heading="Point" editable="false"/>
+            <xul:gridcolumn width="80" heading="Source" editable="false"/>
+            <xul:gridcolumn width="80" heading="Value" editable="false"/>
+         </xul:gridcolumns>
+         <xul:gridrows count="50" height="17"/>
+-->         
+         <xul:gridcolumns sortable="FALSE"/>
+         <xul:gridrows count="0" height="17" headings="FALSE"/>
+      </xul:gridedit>
+   </xul:vbox>
+</svg>

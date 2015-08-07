@@ -1,0 +1,36 @@
+<svg min-width="280" min-height="160">
+   <rect stroke="none" fill="steelblue" x="0" y="0" width="280" height="160"/>
+
+   <g>
+      <rect stroke="none" fill="black" x="10" y="10" width="260" height="20"/>
+      <polyline stroke="darkblue" points="10,30 10,10 270,10"/>
+      <polyline stroke="cyan" points="10,30 270,30 270,10"/>
+
+      <text fill="green" text-anchor="end" x="264" y="27" font-weight="bold" font-family="Arial" font-size="18">
+         <bind attributeName="text" binding="@value"/>
+      </text>
+      <text fill="lime" text-anchor="end" x="265" y="26" font-weight="bold" font-family="Arial" font-size="18">
+         <bind attributeName="text" binding="@value"/>
+      </text>
+   </g>
+
+   <xul:button x="10" y="40" width="40" height="20" label="7" binding="@input=7"/>
+   <xul:button x="10" y="70" width="40" height="20" label="4" binding="@input=4"/>
+   <xul:button x="10" y="100" width="40" height="20" label="1" binding="@input=1"/>
+   <xul:button x="10" y="130" width="90" height="20" label="0" binding="@input=0"/>
+   <xul:button x="60" y="40" width="40" height="20" label="8" binding="@input=8"/>
+   <xul:button x="60" y="70" width="40" height="20" label="5" binding="@input=5"/>
+   <xul:button x="60" y="100" width="40" height="20" label="2" binding="@input=2"/>
+   <xul:button x="110" y="40" width="40" height="20" label="9" binding="@input=9"/>
+   <xul:button x="110" y="70" width="40" height="20" label="6" binding="@input=6"/>
+   <xul:button x="110" y="100" width="40" height="20" label="3" binding="@input=3"/>
+   <xul:button x="110" y="130" width="40" height="20" label="." binding="@input=."/>
+
+   <xul:button x="180" y="40" width="40" height="20" label="C" binding="@input=C"/>
+   <xul:button x="180" y="70" width="40" height="20" label="+" binding="@input=+"/>
+   <xul:button x="180" y="100" width="40" height="20" label="*" binding="@input=*"/>
+   <xul:button x="230" y="40" width="40" height="20" label="E" binding="@input=E"/>
+   <xul:button x="230" y="70" width="40" height="20" label="-" binding="@input=-"/>
+   <xul:button x="230" y="100" width="40" height="20" label="/" binding="@input=/"/>
+   <xul:button x="180" y="130" width="90" height="20" label="=" binding="@input=="/>
+</svg>

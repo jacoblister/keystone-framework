@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<!-- Move to framework ! -->
+<svg min-width="300" min-height="240">
+   <defs>
+      <symbol id="channel">
+         <g>
+            <xul:slider x="0" y="0" width="25" height="100"
+                        minimum="0" maximum="255" position="0" binding="@colour.$i"/>
+            <xul:textbox x="-4" y="110" width="34" height="25" value="0" binding="@colour.$i"/>
+         </g>
+      </symbol>
+      <symbol id="colour">
+         <xul:colorpicker x="0" y="0" width="18" height="18" binding="@colour=index[$i]">  
+            <template attributeName="binding" value="@colour=index[$i]"/>
+            <bind attributeName="color" binding="@palette[$i]">
+<!--            
+               <template attributeName="binding" value="@palette[$i]"/>
+-->               
+            </bind>
+            <bind attributeName="visibility" binding="@showPalette"/>            
+         </xul:colorpicker>
+      </symbol>
+   </defs>
+   <line stroke="palevioletred" x1="20" y1="20" x2="150" y2="120"/>
+   <line stroke="palevioletred" x1="150" y1="20" x2="20" y2="120"/>
+   <rect stroke="black" x="20" y="20" width="130" height="100" rx="0" ry="0">
+      <bind attributeName="fill" binding="@colour"/>
+   </rect>
+   <xul:textbox x="20" y="130" width="130" height="25" binding="@colour"/>
+   <xul:menulist x="20" y="160" width="130" height="30" binding="@colour_name"/>
+   <xul:button label="none" x="176" y="160" width="58" height="23" binding="@colour=none"/>
+   <xul:button label="inherit" x="234" y="160" width="58" height="23" binding="@colour_default=T"/>
+   
+   <xul:text x="185" y="5" width="10" height="22" value="R"/>
+   <xul:text x="225" y="5" width="10" height="22" value="G"/>
+   <xul:text x="265" y="5" width="10" height="22" value="B"/>
+   <array transform="translate(180,20)" xlink:href="#channel" elements="3" spacingX="40"/>
+
+   <g>
+      <array transform="translate(5,190)" spacingX="18" elements="16" xlink:href="#colour" index="0"/>
+      <array transform="translate(5,208)" spacingX="18" elements="16" xlink:href="#colour" index="16"/>   
+   </g>
+</svg>
+

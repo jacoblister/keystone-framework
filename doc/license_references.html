@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<link type="text/css" rel="stylesheet" href="style.css"/>
+<title>Keystone - References</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+</head>
+
+<body>
+
+<div align="center">
+<image width="450" height="120" src="graphics/keystonelogo.png"/>
+<!--
+<embed width="450" height="120" src="keystonelogo.svg" type="image/xml+svg"/>
+-->
+</div>
+<div align="center">
+<a href="home.html">Home</a>
+<a href="about.html">About</a>
+<a href="applications.html">Applications</a>
+<a href="license.html">Software License</a>
+<a href="documentation.html">Documentation</a>
+<a href="download.html">Download</a>
+<a href="community.html">Community</a>
+</div>
+
+<h1>Software License</h1>
+<div align="right" style="font-weight: bold">08 March 2004</div>
+<div align="center">
+<a href="license_terms.html">License Terms</a>
+<a href="license_references.html">References</a>
+<a href="license_documents.html">Relating Documents</a>
+</div>
+
+<hr width="100%" size="2"/>
+
+<h1>References</h1>
+
+<a href="#Open Standards Implemented">Open Standards Implemented</a><br>
+<a href="#Software Works">Software Works Included</a><br>
+<a href="#Software Development Tools">Software Development Tools</a><br>
+
+<hr width="100%" size="2"/>
+
+<h3><a name="Open Standards Implemented"></a>Open Standards Implemented</h3>
+
+<h4>W3C Standards</h4>
+<p>The Keystone Application at least partially implements several open standards
+published by the World Wide Web Consortium (W3C).  The W3C Patent Policy
+Working Group states that (quote):</p>
+
+<blockquote><i>"The W3C Patent Policy governs the handling of patents in the process of
+producing Web standards. The goal of this policy is to assure that
+Recommendations produced under this policy can be implemented on a
+Royalty-Free (RF) basis."</i></blockquote>
+
+<p>The official W3C Patent Policy may be read
+<a href="http://www.w3.org/Consortium/Patent-Policy">here</a></p>
+
+The following W3C standards are at least partially implemented:
+
+<ul>
+<li>XML (Extensible Markup Language) - <a href="http://www.w3.org/TR/REC-xml">http://www.w3.org/TR/REC-xml</a></li>
+<li>XPath (XML Path Language) - <a href="http://www.w3.org/TR/xpath">http://www.w3.org/TR/xpath</a></li>
+<li>SVG (Scalable Vector Graphics)- <a href="http://www.w3.org/TR/SVG">http://www.w3.org/TR/SVG</a></li>
+</ul>
+<h4>XUL</h4>
+
+<p>The Keystone Application Framework partially implements XUL
+(XML User Interface Language).  The specification for this may be seen at:</p>
+
+<p><a href="http://www.mozilla.org/projects/xul/xul.html">http://www.mozilla.org/projects/xul/xul.html</a></p>
+
+<p>This work falls under the Mozilla Public License, the terms of which may be
+read <a href="reference/MPL-1.1.html">here</a></p>
+
+<hr width="100%" size="2"/>
+
+<div style="page-break-before: always"/>
+<h3><a name="Software Works Included"></a>Software Works Included</h3>
+
+The Keystone Application Framework uses several external software works which
+are redistributed with the framework source.  Applications built with the
+Keystone Application Framework must be released under the license terms of these
+aggregate works.  All included works are published with licenses which do not
+restrict free or commercial use.
+
+<h4>Expat</h4>
+
+<p>Expat (XML Parser Toolkit) is a free C Language XML parser written by
+James Clark, officially Technical Lead on the W3C XML Working Group.  The
+Expat parser is used and redistributed with the Keystone source.</p>
+<p>The official site for the parser is
+<a href="http://www.jclark.com/xml/expat.html">http://www.jclark.com/xml/expat.html</a><p>
+
+<p>Expat is licensed (quote)</p>
+<blockquote><i>Expat is freely available with source under a very liberal
+<a href="reference/expat-copying.txt">license</a>
+(the MIT license).</i></blockquote>
+
+<h4>libPNG</h4>
+
+<p>libPNG is a C library for reading and decoding the
+PNG (Portable Network Graphics) image format.  libPNG is published with an
+Open Source license, the terms of which may be read
+<a href="reference/libpng-license.txt">here</a></p>
+
+<p>
+The Open Source libPNG license specifically permits use of the libPNG library
+in commercial products without restriction.</p>
+
+The PNG image format itself is designed to be open and freely implementable (quote)
+<blockquote><i>
+The PNG image format was designed in 1995 specifically in response to the patent
+problems with the LZW algorithm used in GIF. To the best of the PNG group's
+knowledge, PNG was then--and still is--completely patent-free</i></blockquote>
+
+<h4>zlib</h4>
+
+<p>
+zlib is a data compression format and library used (amongst other things) by
+the PNG image format.  zlib is used by libPNG, and therefor zlib is
+redistributed along with libPNG in the Keystone Framework sources.</p>
+
+<p>
+zlib is released under a free software license the terms of which may be read
+<a href="reference/zlib_license.html">here</a></p>
+
+the license permits use of zlib in commercial products without restriction
+(quote):
+<blockquote><i>zlib is designed to be a free, general-purpose, legally
+unencumbered -- that is, not covered by any patents -- lossless
+data-compression library for use on virtually any computer hardware and
+operating system</i></blockquote>
+
+<hr width="100%" size="2"/>
+
+<div style="page-break-before: always"/>
+<h3><a name="Software Development Tools"></a>Software Development Tools</h3>
+
+The Keystone Application framework uses the following development tools in
+producing applications and documentation
+
+<h4>C Compilers</h4>
+
+Keystone and applications built with it are ultimately compiled into executable
+code by a C compiler.  The following compilers are used:
+<ul>
+	<li>Microsoft Visual C Compiler (Win32)</li>
+	<li>GNU C Compiler (Linux)</li>
+</ul>
+
+<p>Microsoft Visual C Compiler is a commercial product, and therefor a software
+developer is required to have a purchased a copy or a of this to build software
+for the Windows platform using the Keystone Application framework.  The
+applications built with the compiler may be distributed on the
+software developers own terms, within the scope of the LGPL license which
+Keystone is released under.</p>
+
+<p>the GNU C Compiler is published under the GPL Free Software license</p>
+
+<h4>GNU Make</h4>
+
+<p>GNU Make is required to build the framework and applications on all
+platforms.  For the Win32 platform, GNU Make is redistributed with the
+framework</p>
+
+<h4>DOxygen Documentation System</h4>
+
+<p>DOxygen is an automated documentation system for C/C++ source code.  The
+Keystone Application framework API documentation is produced by DOxygen.</p>
+
+The documentation created as the output of DOxygen is (quote):
+<blockquote><i>
+Documents produced by doxygen are derivative works derived from the input
+used in their production; they are not affected by this license. [GPL]
+</i></blockquote>
+
+The official website for DOxygen is
+<a href="http://www.doxygen.org">http://www.doxygen.org</a>
+
+<hr width="100%" size="2"/>
+
+</body>
+</html>

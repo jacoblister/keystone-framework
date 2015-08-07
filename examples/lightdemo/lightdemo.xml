@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lightdemo switchState="FALSE TRUE FALSE FALSE">
+   <lights>
+      <light state="FALSE"/>
+      <light state="TRUE"/>
+      <light state="FALSE"/>
+      <light state="FALSE"/>
+      <light state="TRUE"/>
+   </lights>
+</lightdemo>

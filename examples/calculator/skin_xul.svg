@@ -1,0 +1,34 @@
+<svg>
+  <xul:vbox>
+     <xul:hbox>
+        <xul:textbox disabled="TRUE" binding="@value"/>
+     </xul:hbox>
+     
+     <xul:hbox>
+        <xul:button label="7" binding="@input=7"/>
+        <xul:button label="8" binding="@input=8"/>
+        <xul:button label="9" binding="@input=9"/>
+        <xul:button label="C" binding="@input=C"/>
+        <xul:button label="CE" binding="@input=E"/>
+     </xul:hbox>
+     <xul:hbox>
+        <xul:button label="4" binding="@input=4"/>
+        <xul:button label="5" binding="@input=5"/>
+        <xul:button label="6" binding="@input=6"/>
+        <xul:button label="+" binding="@input=+"/>
+        <xul:button label="-" binding="@input=-"/>
+     </xul:hbox>
+     <xul:hbox>
+        <xul:button label="1" binding="@input=1"/>
+        <xul:button label="2" binding="@input=2"/>
+        <xul:button label="3" binding="@input=3"/>
+        <xul:button label="*" binding="@input=*"/>
+        <xul:button label="/" binding="@input=/"/>
+     </xul:hbox>
+     <xul:hbox>
+        <xul:button label="0" binding="@input=0"/>
+        <xul:button label="." binding="@input=."/>
+        <xul:button label="=" binding="@input=="/>
+     </xul:hbox>
+   </xul:vbox>
+</svg>

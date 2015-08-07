@@ -1,0 +1,527 @@
+<link type="text/css" rel="stylesheet" href="style.css"/>
+<title>Keystone - Application Framework</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+</head>
+
+<body>
+
+<div align="center">
+<image width="450" height="120" src="graphics/keystonelogo.png"/>
+<!--
+<embed width="450" height="120" src="keystonelogo.svg" type="image/xml+svg"/>
+-->
+</div>
+<div align="center">
+<a href="home.html">Home</a>
+<a href="about.html">About</a>
+<a href="applications.html">Applications</a>
+<a href="license.html">Software License</a>
+<a href="documentation.html">Documentation</a>
+<a href="download.html">Download</a>
+<a href="community.html">Community</a>
+</div>
+
+<h1>Keystone Language Reference</h1>
+<div align="right" style="font-weight: bold">08 March 2004</div>
+<div align="center">
+<a href="doc_developers_language.html">Language Reference</a>
+<a href="api/html/index.html">API Reference</a>
+</div>
+<hr/>
+
+<a href="#Overview">Overview</a><br>
+<a href="#Modules">Modules</a><br>
+<a href="#Bool_Type">'bool' Data Type</a><br>
+<a href="#Type_Containers">Type Containers</a><br>
+<a href="#Enumerated_Types">Enumerated Types</a><br>
+<a href="#Classes__Objects_">Classes &amp; Objects</a><br>
+<a href="#Attributes">Attributes</a><br>
+<a href="#Exceptions">Exceptions</a><br>
+
+<h3><a name="Overview"></a>Overview</h3>
+<p>At the heart of the Keystone application framework is the Keystone C language.
+&nbsp;The Keystone Application Framework itself, and programs that you write
+using Keystone are writen in Keystone C.  &nbsp;Currently, the language is
+implemented as a preprocessor which operates between the source code that you
+write, and the C compiler which compiles this code.   &nbsp;The preprocessor
+thus translates from the Keystone C language to straight C suitable for the
+C compiler. &nbsp;This flow of operation is illustrated as follows:
+<center>
+<image width="460" height="120" src="graphics/processor.png"/>
+</center>
+</p>
+
+<p>The Keystone language is itself a superset of the C language, and is based
+heavily on C++.
+The design of the language has been made with these objectives
+   <ul>
+      <li>To provide a platform suitable for implementing Object Oriented Design</li>
+      <li>To be immediately familiar to programmers with a background in  C/C++</li>
+   </ul>
+</p>
+
+<p>The Keystone C language is heavily intergrated with the Keystone C framework,
+and should not be considered in isolation.  This document should read in
+reference to other Keystone documentation, and links are made in this document
+to this where relivant.</p>
+
+<p>This document is a reference to the Keystone C language, it is however not
+intended an introduction to programming, Object Oriented Design or the
+C programming language.  Excellent material exists on these topics, and is
+recommended in the <a href="references.html">references</a> document.</p>
+
+<p>This document assumes a familiarity with the C & C++ programming languages
+of the reader</p>
+
+<hr width="100%" size="2">
+<h3><a name="Modules"></a>Modules</h3>
+<ul>
+<li>Modules provide a method of breaking a large applications into managable parts.</li>
+<li>A module may be thought of as a container for logically related classes.</li>
+<li>There a one to one corrospondence between a module and a disk file.</li>
+<li>Modules have the file extension '.c' as for C language source files.</li>
+</ul>
+Unlike an application written in straight C, Keystone does not use
+header files '.h'.
+Instead, a module is internally broken up into sections:<br>
+<ul>
+   <li>Interface - Corrosponds to a '.c' file in a straight C application</li>
+   <li>Implementation - Corrosponds to a '.h' file in a straight C application</li>
+</ul>
+
+<p>Modules are defined by the 'MODULE::' definition in the source.
+&nbsp;The syntax is
+<pre>
+&nbsp;&nbsp;&nbsp; MODULE::&lt;IMPORT | INTERFACE | IMPLEMENTATION | END&gt;
+</pre></p>
+
+<p>A template for a module looks like this:
+<pre>
+/*==========================================================================*/
+MODULE::IMPORT/*============================================================*/
+/*==========================================================================*/
+
+#include "framework.h"
+
+/*==========================================================================*/
+MODULE::INTERFACE/*=========================================================*/
+/*==========================================================================*/
+
+/* Modules Interface section code goes here */
+
+/*==========================================================================*/
+MODULE::IMPLEMENTATION/*====================================================*/
+/*==========================================================================*/
+
+/* Modules Implementation section code goes here */
+
+/*==========================================================================*/
+MODULE::END/*===============================================================*/
+/*==========================================================================*/
+</pre></p>
+
+<hr width="100%" size="2">
+<h3><a name="Bool_Type"></a>'bool' data type</h3>
+
+Keystone introduces the 'bool' data type into the C language.  'bool' is a
+boolean truth value which may be either 'TRUE' or 'FALSE'.  For example
+
+<pre>
+bool active = TRUE;
+</pre>
+
+type 'bool' type operated in the same way as the C language boolean
+evaluation, meaning when a boolean is evaluated as an integer, a value of 0
+indicates 'FALSE' and a non-0 value indicates 'TRUE'.  For example
+
+<pre>
+int level_A = 20, level_B = 20;
+bool active = TRUE;
+
+if (active) {
+   active = (level_A == level_B);
+}
+</pre>
+
+<hr width="100%" size="2">
+<h3><a name="Type_Containers"></a>Type Containers</h3>
+
+<h4>Lists</h4>
+
+<h4>Arrays</h4>
+
+<h4>Stacks</h4>
+
+<a name="Bitfields"></a>
+<h4>Bitfields</h4>
+
+<hr width="100%" size="2">
+<h3><a name="Enumerated_Types"></a>Enumerated Types</h3>
+
+<hr width="100%" size="2">
+<h3><a name="Classes__Objects_"></a>Classes &amp; Objects</h3>
+
+<h4>Defining</h4>
+<p>
+Keystone C uses a syntax simular to C++ to define classes. &nbsp;A class is
+defined with this syntax:
+<pre>
+class {class name} : {base class} {
+&nbsp;public:<br>
+&nbsp;&nbsp; /*public class members and methods */<br>
+&nbsp;private:<br>
+&nbsp;&nbsp; /*private class members and methods */<br>
+};<br>
+</pre></p>
+
+<p>'base class' in manditory, there is no such thing as a baseless
+class in Keystone.</p>
+
+<h4>Inheritence</h4>
+
+<h4>Class Name and Alias</h4>
+<p>Every class has two static text strings associated with it, a name and
+(optionally) an alias. &nbsp;This name information may be retrieved at run
+time by the  application. Class name and aliases are used, for example,
+in loading and storing objects to persistent storage in XML</p>
+
+<p>The classes 'name' is generated automatically when the class is defined and
+may not be modified. &nbsp;The classes name is a text string with the content
+the same as the name used to define the class.  &nbsp;For example, a class
+defined as 'CExample' will have a class name of "CExample".</p>
+
+<p>The class 'alias' is a more informal reference to the class.  &nbsp;Class
+aliases are specified by a <pre>ALIAS&lt;&gt;</pre> definition inside the class
+definition. &nbsp;A class does not need to have an alias,
+but it may have only one  alias. &nbsp;For example:
+<pre>
+class CExample : CObject {
+&nbsp; &nbsp;ALIAS&lt;"demo"&gt;;
+};
+</pre></p>
+
+<p>This defines a class with name 'CExample' and alias 'demo'<p>
+
+<h4>Methods</h4>
+
+<p>Methods operate on an object (an instance of a class) and modify that objects
+internal state.  There are two parts to a method definition:
+   <ul>
+      <li>A method prototype, which is declared inside the class definition</li>
+      <li>The method body, which is declared elsewhere in the module (usually in the
+          IMPLEMENTATION section of the module), and alway after the class definition
+      </li>
+   </ul>
+</p>
+
+<p>It is illegal to define a method body without a method prototype.  The
+method prototype is declared inside the class definition, with this syntax:
+<pre>
+{return type} {method name}({arg1, arg2, ...});
+</pre></p>
+
+<p>The method body is declared with this syntax
+<pre>
+{return type} {class name}::{method name}(arg1, arg2, ...}) {
+   {method body}
+}
+</pre></p>
+
+Inside the method body, a pointer to the object being operated on by the
+method may be refered to using the keyword 'this'
+
+<pre>
+void CExample::value_set(int value) {
+   this->value = value;
+}
+</pre>
+
+<p>A method is involked from an application with this syntax:
+<pre>
+{result} = {class name)({object}).{method name}({arg1, arg1, ...});
+</pre></p>
+
+<p>The following is an example defining and calling methods</p>
+<pre>
+class CExample : CObject {
+ public:
+   bool method_foo(void);
+   bool method_bar(void);
+}
+
+bool CExample::method_foo(void) {
+   return TRUE;
+}
+
+bool CExample::method_bar(void) {
+   return CExample(this).method_foo();
+}
+</pre>
+
+<h4>Virtual Methods</h4>
+
+<h4>Object Construction / Destruction</h4>
+<p>Objects (instances of a classes) are created and destroyed using the 'new'
+and 'delete' operations. &nbsp;Objects may be created either  from
+statically allocated memory, or dynamically, from the heap. &nbsp;</p>
+
+<p>To create an object from statically allocated memory:
+<pre>new({&amp;object}).{class name}({arg1, arg2, ...});</pre>
+                To create an object dynamically
+<pre>{object pointer} = new.{class name}({arg1, arg2, ...});</pre></p>
+
+<p>A simple example using both statically &amp; dynamically allocated objects:
+<pre>
+CExample demo_static, *demo_dynamic;
+
+new(&amp;demo_static).CExample();
+demo_dynamic = new.CExample();
+</pre></p>
+
+The following illustrates the life of an object:
+<center>
+<image width="160" height="340" src="graphics/objectlife.png"/>
+</center>
+
+<p>On construction, the classes 'new' method is called (if present), then
+the classes constructor is called with the arguments passed in the 'new'
+operation. &nbsp;The classes constructor is the classes method which has the
+same name as the class, so for the class 'CExample', method
+<pre>CExample::CExample()</pre> is the constructor</p>
+
+<p>Objects are deleted using the 'delete' operation:
+<pre>
+delete({&amp;object});
+</pre>
+<p>On deletion:
+   <ul>
+      <li>If present, the objects classes destructor is called. &nbsp;The
+          destructor  is the class method which has the same name as the class,
+          prefixed by '~',  so for class 'CExample', the method <pre>CExample::~CExample()</pre>
+          is the destructor</li>
+      <li>If the object was dynamically allocated, the memory allocated to
+				  store the object is released</li>
+   </ul>
+</p>
+
+In summary:
+<ul>
+	<li>The classes 'new()' method is used to allocate memory needed by the
+		  object, and to construct aggregate objects contained within the class</li>
+	<li>The classes constructor is used to initilize the object with parameters
+		  passed by the 'new' operation in the application</li>
+	<li>The objects destructor is used to free memory and release aggregate
+		  objects contained within the class</li>
+</ul>
+
+<p>The following is a typical example of a class definition in relation to
+construction/destruction</p>
+
+<pre>
+class CExample : CObject {
+ private:
+   CString string;
+   int value;
+
+ public:
+   void new(void);
+   void CExample(int value);
+   void ~CExample(void);
+};
+
+void CExample::new(void) {
+   new(&this-&gt;string).CString(NULL);
+};
+
+void CExample::CExample(int value) {
+   this-&gt;value = value;
+   CString(&this-&gt;string).printf("%d", value);
+};
+
+void CExample::~CExample(void) {
+   delete(&this-&gt;string);
+};
+</pre>
+
+
+<h4>Automatic Objects</h4>
+
+Objects may be defined which are automatically constructed when your
+application starts.  An automatic object is declared with this syntax:
+
+<pre>OBJECT&lt;{class name}, {object name}&gt;;</pre>
+
+<h4>Casting</h4>
+<p>A pointer to an object of any class, or a pointer to void data may be cast
+to a pointer to another class. &nbsp;This is done using casting syntax, which
+is</p>
+
+<pre>
+{class name}({object});
+</pre>
+<p>It is valid to cast:
+   <ul>
+      <li>A pointer to an object of a derived class to a pointer to an object one
+          of it's base classes</li>
+      <li>A pointer to an object of a base class to a pointer to an object of
+          one of it's derived classes, so long as the object is an instance of
+          that derived class</li>
+   </ul>
+</p>
+
+<p>If the cast in invalid, and exception will be thrown at run time when the cast
+is attempted. &nbsp;The exception throws is
+<pre>
+EXCEPTION&lt;CObject,InvalidCast&gt;
+</pre></p>
+
+<p>See the section <a href="#Exceptions">Exceptions</a> in this document for
+more information on exceptions.</p>
+
+<h4>Class Information</h4>
+<p>Every class defined by the application framework, and classes defined by
+applications you write has a small associated information structure which
+you may use to retrieve information about the class at run time.
+&nbsp;The structure has the name 'CObjClass' and may be retrieved in one of
+two ways:
+   <ul>
+      <li>The class information for any object may be retrieved by using the
+          <pre>CObject::obj_class()</pre> method on that object
+      </li>
+      <li>The class information for any class may be referenced using the syntax
+          <pre>&amp;class({class name})</pre>
+      </li>
+   </ul>
+</p>
+
+<p>For example to check if the object 'object' is of class 'CExample':
+<pre>
+if (CObject(object).obj_class() == &amp;class(CExample)) {
+&nbsp; &nbsp;/* test has proven true */
+}
+</pre></p>
+
+<h4>Exceptions</h4>
+
+<hr width="100%" size="2">
+<h3><a name="Attributes"></a>Class Attributes</h3>
+
+<p>Class attributes allow members of a class to be made avaliable to
+	 application users. A class member which is marked as an attribute may be:</p>
+<ul>
+	 <li>Stored persistently in a disk file</li>
+	 <li>Displayed and operated on in user interface</li>
+	 <li>Transmitted over a network</li>
+	 <li>Bound to another attribute, so a change of one attribute is reflected
+		   in the other</li>
+</ul>
+
+<p>Attributes are marked when a class is defined, with this syntax:</p>
+<pre>
+ATTRIBUTE&lt;{type} {name}, "{alias}"}&gt;
+</pre>
+
+<p>'{alias}' is optional, if ommitted the attribute will use "{name}" as it's
+name</p>
+
+<p>The following example defines a class with a number of attributes:</p>
+<pre>
+class CExample : CObject {
+ public:
+   ALIAS&lt;"example"&gt;;
+
+   ATTRIBUTE&lt;int width&gt;;
+   ATTRIBUTE&lt;int height&gt;;
+
+   void new(void);
+   void CExample(void);
+   void ~CExample(void);
+}
+</pre>
+
+When this example class is stored persistently as XML, the result will look
+like:
+<pre>
+&lt;?xml version="1.0"?&gt;
+
+&lt;example width="100" height="100"/&gt;
+</pre>
+
+<p>The use of attribute is covered with examples in the
+<a href="tutorial.html">tutorial</a></p>
+
+<h4>Basic Attribute Types</h4>
+
+<p>The following attribute types are built into the Keystone framework:
+<ul>
+	 <li>int - integer value</li>
+	 <li>bool - boolean value</li>
+	 <li>CString - text string</li>
+	 <li>TBitfield - bitfield (see <a href="#Bitfields">Bitfields</a>)</li>
+</ul>
+</p>
+<p>
+In addition, the following types are defined by Keystone graphics (part of the
+framework) and may be used in your application:
+<ul>
+	 <li>TPoint - coordinate value</li>
+	 <li>TColour - HTML colour value</li>
+</ul>
+</p>
+
+<h4>Array Attribute</h4>
+
+<h4>Enumuerated Type Attributes</h4>
+
+<h4>Defining New Attribute Types</h4>
+
+<p>Your application may define new attribute types for it's own use.  An
+attribute type consistes of these parts:
+<ul>
+	 <li>A C language type definition of the attrbiute type</li>
+	 <li>A Keystone declaration of the attribute type</li>
+	 <li>An attribute conversion handler</li>
+</ul>
+
+<pre>
+typedef struct {
+   int hour;
+   int minute;
+   int second;
+} TTime;
+
+ATTRIBUTE:typedef&lt;TTime&gt;;
+
+bool ATTRIBUTE:convert&lt;int&gt;(struct tag_CObjPersistent *object,
+                            const TAttributeType *dest_type, const TAttributeType *src_type,
+                            int dest_index, int src_index,
+                            void *dest, const void *src) {
+   TTime *time;
+   CString *string;
+
+   if (dest_type == &ATTRIBUTE:type&lt;TTime&gt; && src_type == &ATTRIBUTE:type&lt;CString&gt;) {
+      time   = (TTime *)dest;
+      string = (CString *)src;
+      *value = sscanf(CString(string).string(), "%d:%d:%d",
+			                &time-&gt;hour, &time-&gt;minute, &time-&gt;second);
+      return TRUE;
+   }
+
+   if (dest_type == &ATTRIBUTE:type&lt;CString&gt; && src_type == &ATTRIBUTE:type&lt;TTime&gt;) {
+      time   = (TTime *)src;
+      string = (CString *)dest;
+      CString(string).printf("%d:%d:%d", *time);
+      return TRUE;
+   }
+   return FALSE;
+}
+</pre>
+</p>
+
+<hr width="100%" size="2">
+<h3><a name="Exceptions"></a>Exceptions</h3>
+
+<hr width="100%" size="2"><br>
+</body>
+</html>

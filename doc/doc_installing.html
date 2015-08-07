@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<link type="text/css" rel="stylesheet" href="style.css"/>
+<title>Keystone - Installing</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+</head>
+
+<body>
+
+<div align="center">
+<image width="450" height="120" src="graphics/keystonelogo.png"/>
+<!--
+<embed width="450" height="120" src="keystonelogo.svg" type="image/xml+svg"/>
+-->
+</div>
+<div align="center">
+<a href="home.html">Home</a>
+<a href="about.html">About</a>
+<a href="applications.html">Applications</a>
+<a href="license.html">Software License</a>
+<a href="documentation.html">Documentation</a>
+<a href="download.html">Download</a>
+<a href="community.html">Community</a>
+</div>
+
+<h1>Documentation</h1>
+<div align="right" style="font-weight: bold">08 March 2004</div>
+<div align="center">
+<a href="doc_installing.html">Installing</a>
+<a href="doc_developers.html">Developers Reference</a>
+<a href="doc_version.html">Version History</a>
+</div>
+
+<hr width="100%" size="2">
+
+<h1>Installing</h1>
+
+<a href="#Downloading">Downloading</a><br>
+<a href="#Requirements">Requirements</a><br>
+<a href="#Installation">Installation</a><br>
+<a href="#Building Applications">Building Applications</a><br>
+
+<hr width="100%" size="2">
+
+<h3><a name="Downloading"></a>Downloading</h3>
+
+<p>Download the Keystone Application Framework from the
+<a href="download.html">download</a> page.</p>
+
+<p>Download the following packages as required:
+<ul>
+ <li>keystone-x.x-src.tar.gz</a>
+ - main framework source
+ </li>
+ <li>keystone-x.x-doc.tar.gz</a>
+ - API documentation
+ </li>
+</ul>
+</p>
+<p>All target platforms (Win32, Linux, etc) are packaged in the same single
+distribution.</p>
+
+<hr width="100%" size="2">
+
+<h3><a name="Requirements"></a>Requirements</h3>
+
+<h4>Win32</h4>
+
+<ul>
+<li>The Keystone Framework and Applications are built with the Microsoft Visual C++
+compiler (6.0).  This must be installed on the target machine before installing
+the framework.</li>
+<li>GNU Make is required to build, rather than nmake distributed and
+commonly used with MS Visual C++.  GNU Make (binary) for Win32 is redistributed
+with the framework</li>
+<li>The framework and applications built with it will function on all Win32
+platforms (95, 98, 2000, XP, etc).</li>
+</ul>
+
+<h4>Linux</h4>
+
+<ul>
+<li>The Keystone Framework and Applications are built GNU C Compiler.  GCC 3.0
+or later must be installed on the target machine before installing the framework.</li>
+<li>The framework will install and function on any Linux distribution, however
+this installation note relates to Redhat and Debian</li>
+</ul>
+
+<hr width="100%" size="2">
+
+<h3><a name="Installation"></a>Installation</h3>
+
+<h4>Win32</h4>
+
+<h5>Installing Files</h5>
+<p>Extract the framework packages to a suitable directory (eg c:\keystone).
+At minimum, keystone-x.x-src.tar.gz must be installed.</p>
+
+<h5>Environment</h5>
+<p>Keystone needs the following environment variables set to build applications:
+<ul>
+<li>KEYSTONE_DIR - base directory of keystone installation</li>
+<li>KEYSTONE_TARGET - target platform (win32)</li>
+<li>SUFFIX_OBJ - object file suffix (.obj)</li>
+<li>SUFFIX_LIB - library file suffix (.lib)</li>
+<li>PATH - must contain 'keystone\bin\win32'</li>
+</ul>
+</p>
+<p>For convenience, the batch file 'keystone\bin\win32\keyenv.bat' will set the
+needed environment variables for an installation in 'c:\keystone'</p>
+
+<h5>Building the framework</h5>
+<p>Once the environment is set up, change directory to where you have installed
+in the framework eg c:\keystone), and run 'make'.  This will build and install
+the framework, and build the example programs</p>
+
+<p>If this does not work follow these more detailed instructions:</p>
+
+<ul>
+<li>Change directory to where you have installed in the framework
+eg c:\keystone)</li>
+<li>Change to the 'src' directory under this (eg cd 'src')
+<li>Run 'make tools_build'</li>
+<li>Run 'make tools_install'</li>
+<li>Run 'make' with no arguments</li>
+<li>Run 'make install'</li>
+</ul>
+
+<p>This will build the framework libraries which need to be linked with
+applications.</p>
+
+<h4>Linux</h4>
+
+<h5>Installing Files</h5>
+<p>Extract the framework packages to a suitable directory.  For example:
+<ul>
+<li>/usr/local/keystone</li>
+<li>/home/user/keystone</li>
+</ul>
+<p/>
+At minimum, keystone-x.x-src.tar.gz must be installed.</p>
+
+<h5>Environment</h5>
+<p>Keystone needs the following environment variables set to build applications:
+<ul>
+<li>KEYSTONE_DIR - base directory of keystone installation</li>
+<li>KEYSTONE_TARGET - target platform (linux)</li>
+<li>SUFFIX_OBJ - object file suffix (.o)</li>
+<li>SUFFIX_LIB - library file suffix (.a)</li>
+<li>PATH - must contain 'keystone\bin\linux'</li>
+</ul>
+</p>
+<p>For convenience, a section of script to set these is in
+'keystone\bin\linux\setvars'.  Copy the contents of this file into
+'/home/user/.bashrc' to set the environment for the Bash shell</p>
+
+<h5>Building the framework</h5>
+<p>Once the environment is set up, change directory to where you have installed
+in the framework eg /usr/local/keystone), and run 'make'.  This will build and install
+the framework, and build the example programs</p>
+
+<p>If this does not work follow these more detailed instructions:</p>
+
+<ul>
+<li>Change directory to where you have installed in the framework
+eg /usr/local/keystone)</li>
+<li>Change to the 'src' directory under this (eg cd 'src')
+<li>Run 'make tools_build'</li>
+<li>Run 'make tools_install'</li>
+<li>Run 'make' with no arguments</li>
+<li>Run 'make install'</li>
+</ul>
+
+<p>This will build the framework libraries which need to be linked with
+applications.</p>
+
+<hr width="100%" size="2">
+
+<h3><a name="Building Applications"></a>Building Applications</h3>
+<p>The installation is now complete.  </p>
+
+<p>To build the example programs:</p>
+<li>Change directory to where you have installed in the framework
+eg c:keystone)</li>
+<li>Change to the 'examples' directory under this (eg cd 'examples')
+<li>Run 'make'</li>
+
+<hr width="100%" size="2">
+
+</body>
+</html>

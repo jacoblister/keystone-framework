@@ -1,0 +1,19 @@
+<svg min-width="320" min-height="100" max-width="320" max-height="100">
+   <rect stroke="none" fill="white" x="5" y="5" width="310" height="90"/>
+   <polygon stroke="none" fill="lightsteelblue" points="5,5 95,5 5,95"/>
+   <polygon stroke="none" fill="blue" points="95,5 105,5 15,95 5,95"/>   
+   <polygon stroke="none" fill="steelblue" points="105,5 115,5 25,95 15,95"/>      
+   <rect stroke="grey" fill="none" x="5" y="5" width="310" height="90"/>
+   <rect stroke="none" fill="black" x="10" y="15" width="300" height="30"/>   
+   <text fill="lime" text-anchor="middle" x="160" y="39" font-weight="bold" font-family="Arial" font-size="24">0
+      <bind attributeName="text" binding="/counter/@value"/>   
+   </text>
+
+   <g transform="translate(10,60)">
+      <xul:hbox width="300" height="30">
+         <xul:button label="Dec (-)" binding="/counter/@command=Dec"/>
+         <xul:button label="Clear" binding="/counter/@command=Clear"/>
+         <xul:button label="Inc (+)" binding="/counter/@command=Inc"/>
+      </xul:hbox>
+   </g>      
+</svg>

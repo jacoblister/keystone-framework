@@ -1,0 +1,9 @@
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+10100                 ICON    DISCARDABLE     "keystone.ico"
+1 24 "keystone.manifest"

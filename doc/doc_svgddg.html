@@ -1,0 +1,466 @@
+<!--
+2004-09-30 Fix typos
+2004-10-01 Fix typos
+2004-10-28 Fix typos
+2005-07-04 Fix formatting
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+
+<link type="text/css" rel="stylesheet" href="style.css"/>
+<title>Keystone - SVG For Data Driven Graphics</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
+</head>
+
+<body>
+
+<div align="center">
+<image width="450" height="120" src="graphics/keystonelogo.png"/>
+<!--
+<embed width="450" height="120" src="keystonelogo.svg" type="image/xml+svg"/>
+-->
+</div>
+<div align="center">
+<a href="home.html">Home</a>
+<a href="about.html">About</a>
+<a href="applications.html">Applications</a>
+<a href="license.html">Software License</a>
+<a href="documentation.html">Documentation</a>
+<a href="download.html">Download</a>
+<a href="community.html">Community</a>
+</div>
+
+<h1>Documentation</h1>
+<div align="right" style="font-weight: bold">04 July 2005</div>
+<div align="center">
+<a href="doc_installing.html">Installing</a>
+<a href="doc_developers.html">Developers Reference</a>
+<a href="doc_tutorial.html">Tutorial</a>
+<a href="doc_svgddg.html">SVG Data Driven</a>
+<a href="doc_version.html">Version History</a>
+</div>
+
+<hr width="100%" size="2">
+
+<h1>SVG For Data Driven Graphics</h1>
+<a href="#Abstract">Abstract</a><br>
+<a href="#Objectives">Objectives</a><br>
+<a href="#DataModel">Data Model</a><br>
+<a href="#AnimModel">Animation Model and Animation Binding</a><br>
+<a href="#Symbolic">Symbolic Content</a><br>
+<a href="#InputAnim">Input Animations</a><br>
+
+<hr width="100%" size="2"/>
+
+<h3><a name="Abstract"></a>Abstract</h3>
+<p>This document describes extentions to the SVG specification to allow data driven binding of SVG content to 
+application data in real time.  In short, this is achieved through connection of SVG animations
+to application data using XPath syntax.  Bound SVG animations reflect the state of data 
+dynamically, and additionally new SVG animation input types allow setting the value of bound data.  
+The new document content is refered to as SVGDDG throughout this document</p>
+<hr/>
+
+<h3><a name="Objectives"></a>Objectives</h3>
+<p>The SVG specification provides dynamic manipulation of document content through several methods, namely SVG 
+animations, raw access to the SVG DOM from the implementing application, and embedded scripting.  None of these 
+methods are attractive for the needs of data driven graphics:</p>
+<ul>
+<li>SVG Animations - provide a simple and flexiable means of manipulating SVG content, but cannot be bound to
+external data</li>
+<li>Raw Access to the DOM - Allows the SVG implementing application to perform any manipulation of SVG content, 
+but any such action will be application specific and cannot be described within the SVG document itself</li>
+<li>Embedded Scripting - provides very flexible manipulation of document content, and can be contained within the
+SVG document.  However, scripting language needs access to an external IO database, simple case data/animation 
+binding is complicated, and the elegance of pure XML SVG is lost</li>
+</ul>
+
+<p>SVGDDG aims to provided data driven graphics capibilities to SVG with the following objectives:</p>
+
+<h4>Pure SVG for static graphics</h4>
+<p>SVGDDG makes extentions to the animation syntax of SVG, but does not change in any way the syntax of SVG for 
+static graphics.  So if all SVG animations are removed from the SVGDDG document, the resulting document 
+will be pure SVG, and viewable on any compliant SVG implementation</p>
+<h4>Use SVG Animation model</h4>
+<p></p>
+<p>Data driven graphics are achieved through extentions to SVG animations.  All base SVG animations are avaliable to 
+SVGDDG, and in addition new SVG animation types may be added by the SVGDDG implementation, to meet the needs of the 
+problem domain SVGDDG is being applied to.</p>
+<h4>Symbolic Content</h4>
+<p>SVG provides a powerful symbolic content model through use of the <code>&lt;symbol/&gt;</code>, 
+<code>&lt;use/&gt;</code> elements.  SVGDDG provides an equally powerful method of addressing and 
+binding referenced SVG symbolic content to application data</p>
+<hr/>
+<h3><a name="DataModel"></a>Data Model</h3>
+
+<h4>Data Servers</h4>
+<p>SVGDDG has the concept of data servers to direct the action of data driven graphics.  A data server is a 
+hierarchically structured database of IO and control information, which an SVGDDG document may address and bind animation data to
+using XPath syntax.  The SVGDDG implementation is responsible for providing a data server for the SVGDDG document content.  
+Note the following:
+<ul>
+   <li>Only one data server is used per SVGDDG document, and the SVGDDG implementation is responsible to assigning 
+       the SVGDDG document to a data server</li>
+   <li>The data server has a root node, which will appear as <code>'/{rootname}'</code> in XPath syntax.  All IO data appears under the 
+       root node of the data server</li>
+</ul>
+
+<p>An example snapshot of a data server exported as XML:</p>
+<pre>
+&lt;lightcontroller&gt;
+   &lt;lights&gt; 
+      &lt;light id="light A" state="Off"/&gt;
+      &lt;light id="light B" state="On"/&gt;
+      &lt;light id="light C" state="Off"/&gt;
+      &lt;light id="light D" state="Off"/&gt;
+   &lt;/lights&gt;
+   &lt;switchs state="Off On Off Off"/&gt;
+&lt;/lightcontroller&gt;
+</pre>
+</p>
+<hr/>
+
+<h3><a name="AnimModel"></a>Animation Model and Animation Binding</h3>
+<!--
+<h4>SVG Document states</h4>
+-->
+<h4>SVG Animation</h4>
+<p>Base SVG animations with additional syntax are used for data driven bindings.  All base animations as described 
+in the SVG specification without additional syntax will operate as normal.</p>
+<p>All active SVG animations have a current position value, which by default is bound to time (since the document entered 
+animated state or was reset).  The current position value is a real number, in the case of time starting at '0.0' and 
+incrementing linearly by '1.0' each second.  SVGDDG allows this current position value to be bound to a value in the
+SVGDDG documents related data server refered to by XPath syntax</p>
+
+<h4>The <code>'binding'</code> Attribute</h4>
+<p>When present, the <code>'binding'</code> attribute of an SVG animation is an XPath reference to a data value in the 
+SVGDDG documents related data server.  When present and the SVGDDG document is in the animated state, the animations 
+current position will be taken from the element value referenced in data server, rather than from the time since the 
+document entered the animated state.  The SVGDDG implementation is responsible for converting the referenced elements 
+value from whatever internal format it may be to a real number.  So for example, a boolean data type would have a real 
+number value of:</p>
+<ul>
+   <li>off - 0.0</li>
+   <li>on - 1.0</li>
+</ul>
+
+A simple example of SVGDDG animation, bound to data in the previous data server example:
+
+<pre>
+&lt;svg&gt;
+   &lt;circle stroke-width="2" cx="20" cy="20" r="10" stroke="darkred" fill="darkred">
+      &lt;animateColor attributeName="fill" from="darkred" 
+                    to="red" begin="0.0" end="1.0" fill="freeze"
+                    binding="/lightcontroller/light[0]/@state"/&gt;
+   &lt;/circle&gt;
+   &lt;circle stroke-width="2" cx="60" cy="20" r="10" stroke="darkred" fill="darkred"&gt;   
+      &lt;animateColor attributeName="fill" from="darkred" 
+                    to="red" begin="0.0" end="1.0" fill="freeze"
+                    binding="/lightcontroller/light[1]/@state"/&gt;
+   &lt;/circle&gt;
+   &lt;circle stroke-width="2" cx="100" cy="20" r="10" stroke="darkred" fill="darkred"&gt;   
+      &lt;animateColor attributeName="fill" from="darkred" 
+                    to="red" begin="0.0" end="1.0" fill="freeze" 
+                    binding="/lightcontroller/light[2]/@state"/&gt;
+   &lt;/circle>
+   &lt;circle stroke-width="2" cx="140" cy="20" r="10" stroke="darkred" fill="darkred"&gt;   
+      &lt;animateColor attributeName="fill" from="darkred" 
+                    to="red" begin="0.0" end="1.0" fill="freeze"
+                    binding="/lightcontroller/light[3]/@state"/&gt;
+   &lt;/circle&gt;
+&lt;/svg&gt;
+</pre>
+<center>
+<image border="1" src="light01.bmp"/>
+</center>
+
+<h4>XPath Addressing and Expressions</h4>
+<p>The XPath binding expression must evaluate to a single real number (with the exception of a binding in the 
+<code>&lt;bind/&gt;</code> SVGDDG animation, see later).  Specifically this means that XPath expressions which 
+address a node set of greater than a single node are not meaningful.  </p>
+
+<p>XPath expressions operations (arithmetic and logical) 
+may be used to manipulate the result before being passed to the animation current value, for example:<p>
+<ul>
+   <li><pre>/lightcontoller/lights/light[0]/@state</pre></li>
+   <li><pre>not(/lightcontoller/lights/light[0]/@state)</pre></li>   
+   <li><pre>/lightcontoller/lights/light[0]/@state=On</pre></li>
+   <li><pre>count(/lightcontoller/lights)</pre></li>      
+   <li><pre>count(/lightcontoller/lights) * 10</pre></li>         
+</ul>
+
+Complex expressions are also posible, for example:
+<ul>
+   <li><pre>/lightcontroller/lights[0]/@state=On and /lightcontroller/lights[1]/@state=On</pre></li>
+</ul>
+
+<h4>XPath Extended Addressing</h4>
+
+<p>The SVGDDG document content may use extened XPath addressing if the SVGDDG XPath implementation supports it.  
+This allows content within a referenced element attribute (Array element and index) to be addressed.  For example:
+<ul>
+   <li><pre>/lightcontoller/switches/@value[1]</li>
+   <li><pre>/palette/@colour[2].red</li>
+</ul>
+
+<h4>The <code>&lt;bind/&gt;</code> Element</h4>
+
+<p>SVGDDG binding applied to base SVG animations is always the resulting real number (the animation current position), 
+evaluated from the XPath reference.  The <code>&lt;bind/&gt;</code> element is a non base SVG animation which allows a more 
+direct binding of a data server value to an SVG attribute.  For example:</p>
+
+<pre>
+&lt;svg&gt;
+   &lt;text font-family="Arial" font-size="12" x="10" y="10"&gt;
+      &lt;bind attributeName="text" binding="/lightcontroller/lights/light[0]/@id"/&gt;
+   &lt;/text&gt;   
+   &lt;circle stroke-width="2" cx="20" cy="20" r="10" stroke="darkred" fill="darkred">
+      &lt;animateColor attributeName="fill" from="darkred" 
+                    to="red" begin="0.0" end="1.0" fill="freeze"
+                    binding="/lightcontroller/light[0]/@state"/&gt;
+   &lt;/circle&gt;
+&lt;/svg&gt;
+</pre>
+
+<p>The SVG element attribute will reflect the data server value directly, without further translation or evaluation of 
+the XPath reference</p>
+<hr/>
+
+<h3><a name="Symbolic"></a>Symbolic Content</h3>
+
+<h4>The SVG <code>&lt;use/&gt;</code> Element</h4>
+
+<p>In addition to being bound to application data, animations within SVG symbols may be exported as parameters, and their data 
+connection bound dynamcially when the symbol is referenced in the SVGDDG document.  This creates three levels of SVG animation binding:</p>
+<ul>
+   <li>Default - animation bound to time as in SVG specification</li>
+   <li>Data Bound - animation bound to data as specified by XPath reference in <code>'binding'</code>attribute</li>   
+   <li>Parameter Exported - animation inside symbol bound to data as specified by SVG symbol <code>&lt;use/&gt;</code> element</li>
+</ul>
+
+<pre>
+&lt;svg&gt;
+   &lt;defs&gt;
+      &lt;symbol id="lightbulb"&gt;
+         &lt;ellipse stroke="black" fill="white" cx="20" cy="20" rx="-20" ry="-20"&gt;
+            &lt;animateColor attributeName="fill" begin="1" dur="1" fill="freeze" 
+                          from="yellow" to="yellow" binding="."/&gt;
+         &lt;/ellipse&gt;
+         &lt;polyline stroke-width="1" stroke="grey" fill="none" 
+                   points="12,16 16,12 20,16 24,12 28,16 28,16"&gt;
+            &lt;animateColor attributeName="stroke" begin="1" dur="1" fill="freeze" 
+                          from="orange" to="orange" binding="."/&gt;         
+            &lt;animate attributeName="stroke-width" begin="1" dur="1" fill="freeze" 
+                     from="1" to="3" binding="."/&gt;
+         &lt;/polyline&gt;
+         &lt;rect stroke="black" fill="lightcoral" x="8" y="32" width="24" height="32" rx="0" ry="0"/&gt; 
+         &lt;line stroke="black" fill="white" stroke-width="3" x1="4" y1="44" x2="36" y2="40"/&gt;
+         &lt;line stroke="black" fill="white" stroke-width="3" x1="4" y1="48" x2="36" y2="44"/&gt;
+         &lt;line stroke="black" fill="white" stroke-width="3" x1="4" y1="52" x2="36" y2="48"/&gt;
+         &lt;line stroke="black" fill="white" stroke-width="3" x1="4" y1="56" x2="36" y2="52"/&gt;
+         &lt;line stroke="black" fill="white" stroke-width="3" x1="4" y1="60" x2="36" y2="56"/&gt;
+         &lt;line stroke="black" fill="white" stroke-width="3" x1="4" y1="64" x2="36" y2="60"/&gt;
+         &lt;line stroke="black" fill="white" x1="16" y1="32" x2="12" y2="12"/&gt; 
+         &lt;line stroke="black" fill="white" x1="24" y1="32" x2="28" y2="12"/&gt;
+      &lt;/symbol&gt; 
+   &lt;/defs&gt;
+
+   &lt;use xlink:href="#lightbulb" symbolPath="/lightcontroller/lights/light[0]/@state"/&gt;
+   &lt;use transform="translate(50)"  xlink:href="#lightbulb" 
+        symbolPath="/lightcontroller/lights/light[1]/@state"/&gt;
+   &lt;use transform="translate(100)" xlink:href="#lightbulb" 
+        symbolPath="/lightcontroller/lights/light[2]/@state"/&gt;
+   &lt;use transform="translate(150)" xlink:href="#lightbulb" 
+        symbolPath="/lightcontroller/lights/light[3]/@state"/&gt;
+&lt;/svg&gt;
+</pre>
+
+<center>
+<image border="1" src="light02.bmp"/>
+</center>
+
+<h4>Relative Addressing (the <code>'symbolPath'</code> attribute)</h4>
+<p>Animations may use a full XPath reference to reference content in the data server.  In addition, each instance of a symbol 
+(SVG <code>&lt;use/&gt;</code> element) has a current path, which may be used as part of a relative data binding address for an 
+animation in the symbol.</p>
+<p>The <code>'symbolPath'</code> attribute of a <code>&lt;use/&gt;</code> element, when present, specifies the current path for that
+instance of the symbol.  For example:</p>
+<pre>
+&lt;svg&gt;
+   &lt;defs&gt;
+      &lt;symbol id="lightbulb"&gt;
+         &lt;ellipse stroke="black" fill="white" cx="20" cy="20" rx="-20" ry="-20"&gt;
+            &lt;animateColor attributeName="fill" begin="1" dur="1" fill="freeze"
+                          from="yellow" to="yellow" binding="@state"/&gt;
+         &lt;/ellipse&gt;
+      &lt;/symbol&gt;
+   &lt;/defs&gt;
+
+   &lt;use xlink:href="#lightbulb" symbolPath="/lightcontroller/lights/light[0]"/&gt;
+   &lt;use transform="translate(50)"  xlink:href="#lightbulb" symbolPath="/lightcontroller/lights/light[1]"/&gt;
+   &lt;use transform="translate(100)" xlink:href="#lightbulb" symbolPath="/lightcontroller/lights/light[2]"/&gt;
+   &lt;use transform="translate(150)" xlink:href="#lightbulb" symbolPath="/lightcontroller/lights/light[3]"/&gt;
+&lt;/svg&gt;
+</pre>
+
+<p>Here, the <code>'symbolPath'</code> attribute of the <code>&lt;use/&gt;</code> element specifies a current path of 
+'/lightcontroller/lights/light[x]', inside the symbol, the relitive path of '@state' is used.  When rendered, the 
+full path will resolve to:</p>
+<pre>
+/lightcontroller/lights/light[x]/@state
+</pre>
+<p>where 'x' is the light number (0-3)</p>
+<p>The <code>'symbolPath'</code> attribute may itself be a relative path, if the <code>&lt;use/&gt;</code> element references a symbol
+within a symbol</p>
+
+<h4>Paramatised Symbols</h4>
+<p>Parametised symbols provide a much more powerful and flexible means of assigning data bindings to SVG animations in symbols 
+dynamically.  A paramitised symbol provides a list of parameters which the <code>&lt;use/&gt;</code> element may reference and provide 
+the final data binding for.</p>
+
+<h4>The SVG animation <code>'exportName'</code> attribute</h4>
+
+<p>All SVGDDG animations may bind to data by use the the <code>'binding'</code> attribute, described earlier.  In addition, for an 
+animation within a symbol, the animation may be marked as an exported parameter with the <code>'exportName'</code> attribute.  
+When preset, the animation may be referenced by this name by the 
+<code>&lt;use/&gt;</code> element which instances the symbol.  If the 
+animation defines both a <code>'binding'</code> attribute and a <code>'exportName'</code> attribute, only the <code>'binding'</code> 
+attribute will be used</p>
+
+<pre>
+&lt;svg&gt;
+   &lt;defs&gt;
+      &lt;symbol id="lightbulb"&gt;
+         &lt;ellipse stroke="black" fill="white" cx="20" cy="20" rx="-20" ry="-20"&gt;
+            &lt;animateColor attributeName="fill" begin="1" dur="1" fill="freeze" 
+                          from="yellow" to="yellow" exportName="on"/&gt;
+         &lt;/ellipse&gt;
+      &lt;/symbol&gt;
+   &lt;/defs&gt;
+&lt;/svg&gt;      
+</pre>      
+
+<h4>The <code>&lt;parameters/&gt;</code> element</h4>
+<p>The SVG <code>&lt;use/&gt;</code> element may define a list of mapped paramters inside it's <code>&lt;parameters/&gt;</code> child.  
+with the <code>&lt;parameter/&gt;</code> element.  Each parameter has two attributes:</p>
+<ul>
+   <li><code>'name'</code> is the parameter name as declared by the <code>'exportName'</code> attribute in the symbol animation</li>
+   <li><code>'binding'</code> is an XPath reference which the mapped animation will be bound to</li>   
+</ul>
+
+<pre>
+&lt;svg&gt;
+   &lt;defs&gt;
+      &lt;symbol id="lightbulb"&gt;
+         &lt;ellipse stroke="black" fill="white" cx="20" cy="20" rx="-20" ry="-20"&gt;
+            &lt;animateColor attributeName="fill" begin="1" dur="1" fill="freeze" 
+                          from="yellow" to="yellow" exportName="on"/&gt;
+         &lt;/ellipse&gt;
+      &lt;/symbol&gt;
+   &lt;/defs&gt;
+      
+   &lt;use xlink:href="#lightbulb"&gt;
+      &lt;parameters&gt;      
+         &lt;parameter name="on" binding="/lightcontroller/lights/light[0]/@state"/&gt;                  
+      &lt;/parameters&gt;
+   &lt;/use&gt;
+&lt;/svg&gt;      
+</pre>
+
+<h4>External Content Referencing</h4>
+<p><code>&lt;use/&gt;</code> elements may use a full xlink reference to reference content in another SVG file, as well 
+as inside the current SVG document.  For example:</p>
+
+<pre>
+&lt;svg&gt;
+   &lt;use xlink:href="symbols.svg#lightbulb"&gt;
+      &lt;parameters&gt;      
+         &lt;parameter name="on" binding="/lightcontroller/lights/light[0]/@state"/&gt;                  
+      &lt;/parameters&gt;
+   &lt;/use&gt;
+&lt;/svg&gt;      
+</pre>
+<hr/>
+
+<!-- Write these later
+<h4>The <code>&lt;array/&gt;</code> Element and the <code>'index'</code> Attribute</h4>
+
+<hr/>
+
+<h3>Foreign Object Embedding</h3>
+<h4>XUL</h4>
+<h4>Active X</h4>
+<hr/>
+-->
+
+<h3><a name="InputAnim"></a>Input Animations</h3>
+<p>SVG animations allow manipulation of the SVG document contents over time, or in the case of SVGDDG by 
+connection to application data.  Input animations are SVGDDG specific, and allow bound application data to be 
+modified by inputs events fired from the SVG document.  Input events are generated by user input (keyboard and mouse).  
+Input animation have the same basic syntax as SVG animations, though they do not modify their parent SVG object</p>
+
+<h4>The SVG &lt;animateInputEvent/&gt; Element</h4>
+<p>The event has the following attributes:
+<ul>
+   <li><code>'binding'</code> An XPath reference to the application data which will be modified.</code></li>  
+   <li><code>'event'</code> The SVG event name which will trigger the input animation (eg <code>'click'</code>)</li>
+   <li><code>'value'</code> Value to assign to application data referenced by binding when the animation is triggered</li>   
+</ul>
+
+<pre>
+&lt;svg&gt;
+   &lt;defs&gt;
+      &lt;symbol id="switch"&gt;
+         &lt;rect stroke="red" fill="brown" x="0" y="0" width="25" height="50" rx="0" ry="0"/&gt;
+         &lt;line stroke="lightcoral" x1="5" y1="5" x2="20" y2="5"/&gt;
+         &lt;line stroke="lightcoral" x1="5" y1="10" x2="20" y2="10"/&gt;            
+         &lt;line stroke="lightcoral" x1="5" y1="15" x2="20" y2="15"/&gt;
+         &lt;line stroke="lightcoral" x1="5" y1="20" x2="20" y2="20"/&gt;
+         &lt;line stroke="lightcoral" x1="5" y1="25" x2="20" y2="25"/&gt;            
+         &lt;line stroke="lightcoral" x1="5" y1="30" x2="20" y2="30"/&gt;            
+         &lt;line stroke="lightcoral" x1="5" y1="35" x2="20" y2="35"/&gt;            
+         &lt;line stroke="lightcoral" x1="5" y1="40" x2="20" y2="40"/&gt;            
+         &lt;line stroke="lightcoral" x1="5" y1="45" x2="20" y2="45"/&gt;                        
+         &lt;rect stroke="none" fill="#000000" x="10" y="20" width="5" height="10" rx="0" ry="0"/&gt;
+         &lt;g visiblity="hidden"&gt;
+            &lt;bind attributeName="visibility" binding="."/&gt;
+            &lt;animateInputEvent binding=".=0" event="click"/&gt;
+            &lt;rect stroke="red" fill="white" x="5" y="5" width="5" height="20" rx="0" ry="0"/&gt;
+            &lt;rect stroke="red" fill="white" x="15" y="5" width="5" height="20" rx="0" ry="0"/&gt; 
+            &lt;rect stroke="red" fill="yellow" x="5" y="5" width="15" height="5" rx="0" ry="0"/&gt;
+         &lt;/g&gt;
+         &lt;g visiblity="hidden"&gt;
+            &lt;bind attributeName="visibility" binding="not(.)"/&gt;            
+            &lt;animateInputEvent binding=".=1" event="click"/&gt;               
+            &lt;rect stroke="red" fill="white" x="5" y="25" width="5" height="20" rx="0" ry="0"/&gt;
+            &lt;rect stroke="red" fill="white" x="15" y="25" width="5" height="20" rx="0" ry="0"/&gt;
+            &lt;rect stroke="red" fill="yellow" x="5" y="40" width="15" height="5" rx="0" ry="0"/&gt;
+         &lt;/g&gt;
+         &lt;rect stroke="none" fill="#000000" x="20" y="20" width="5" height="10" rx="0" ry="0"/&gt;
+         &lt;rect stroke="none" fill="#000000" x="0" y="20" width="5" height="10" rx="0" ry="0"/&gt;
+      &lt;/symbol&gt;
+   &lt;/defs&gt;
+   &lt;use transform="translate(0)" xlink:href="#lightbulb"/&gt;
+   &lt;use transform="translate(50)" xlink:href="#lightbulb"/&gt;
+   &lt;use transform="translate(100)" xlink:href="#lightbulb"/&gt;
+   &lt;use transform="translate(150)" xlink:href="#lightbulb"/&gt;
+    
+   &lt;use transform="translate(8,100)" xlink:href="symbols.svg#switch"/&gt;
+   &lt;use transform="translate(58,100)" xlink:href="symbols.svg#switch"/&gt;
+   &lt;use transform="translate(108,100)" xlink:href="symbols.svg#switch"/&gt;   
+   &lt;use transform="translate(158,100)" xlink:href="symbols.svg#switch"/&gt;    
+&lt;/svg&gt;
+</pre>
+<center>
+<image border="1" src="switch01.bmp"/>
+</center>
+</p>
+
+<h4>The SVG &lt;animateInputSlider/&gt; Element</h4>
+<i>To be written</i>
+<hr/>
+
+</body>
+</html>

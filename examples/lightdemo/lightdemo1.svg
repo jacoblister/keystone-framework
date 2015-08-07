@@ -1,0 +1,16 @@
+<svg min-width="320" min-height="40">
+   <defs>
+      <symbol id="light">
+         <circle stroke-width="2" cx="0" cy="0" r="10" stroke="darkred" fill="darkred">
+            <animateColor attributeName="fill" from="darkred" 
+                          to="red" begin="0.0" end="1.0" fill="freeze"
+                          binding="."/>
+         </circle>
+       </symbol>
+    </defs>
+    
+    <array transform="translate(20,20)" xlink:href="#light" symbolPath="/lightdemo/lights/light[$i]/@state"
+           spacingX="40">
+       <bind attributeName="elements" binding="count(/lightdemo/lights)"/>
+    </array>
+</svg>

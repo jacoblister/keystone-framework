@@ -1,0 +1,14 @@
+<svg>
+   <g fill="darkblue">
+      <animateColor attributeName="fill" from="white" to="darkblue" dur="1" fill="freeze"/>
+      <text text-anchor="middle" font-family="Arial" font-size="100" font-weight="bold" x="300" y="300">
+         <animateTransform attributeName="transform" type="translate" from="-100,0" to="0,0" dur="1" fill="freeze"/>
+      S</text>
+      <text text-anchor="middle" font-family="Arial" font-size="100" font-weight="bold" x="380" y="300">
+	     <animateTransform attributeName="transform" type="translate" from="0,-100" to="0,0" dur="1" fill="freeze"/>
+      V</text>
+      <text text-anchor="middle" font-family="Arial" font-size="100" font-weight="bold" x="460" y="300">
+	     <animateTransform attributeName="transform" type="translate" from="0,100" to="0,0" dur="1" fill="freeze"/>
+      G</text>
+   </g>
+</svg>

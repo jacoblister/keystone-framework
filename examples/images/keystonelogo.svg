@@ -1,0 +1,38 @@
+<svg width="450" height="120">
+   <g stroke="lightseagreen" stroke-width="4">
+      <animateColor attributeName="stroke" from="white" to="lightseagreen" dur="1" fill="freeze"/>
+      <animateTransform attributeName="transform" type="scale" from="0,1" to="1,1" dur="1" fill="freeze"/>
+      <line transform="translate(30,32)" x1="65" y1="0" x2="290" y2="0"/>
+      <line transform="translate(30,93)" x1="55" y1="0" x2="280" y2="0"/>
+   </g>
+   <g transform="translate(62,63)">
+      <polygon fill="lightsteelblue" points="-30,-33 30,-33 20,32 -20,32">
+         <animateTransform attributeName="transform" type="scale" from="0" to="1" dur="1" fill="freeze"/>
+      </polygon>
+   </g>
+
+<!-- Use more efficient opacity once implemented by framework
+   <g opacity="0">
+      <animate attributeName="opacity" from="0" to="1" begin="1" dur="1" fill="freeze"/>
+      <text font-family="Arial" fill="steelblue" x="40" y="80" font-size="60" font-weight="bold">Keystone</text>
+      <text fill="black" font-family="Arial" x="330" y="57" font-size="18" font-weight="bold">Agile</text>
+      <text fill="black" font-family="Arial" x="330" y="62" font-size="18" font-weight="bold">Application</text>
+      <text fill="black" font-family="Arial" x="330" y="77" font-size="18" font-weight="bold">Framework</text>
+   </g>
+-->
+
+   <text text-anchor="middle" visibility="hidden" font-family="Arial" fill="lightsteelblue" x="62" y="78" font-size="54">
+      <set attributeName="visibility" to="visible" begin="1" dur="1" fill="freeze"/>
+      <animateColor attributeName="fill" from="lightsteelblue" to="steelblue" begin="1" dur="1" fill="freeze"/>K</text>
+   <text text-anchor="middle" font-family="Arial" fill="white" x="115" y="78" font-size="54">
+      <animateColor attributeName="fill" from="white" to="steelblue" begin="1" dur="1" fill="freeze"/>ey</text>
+   <text text-anchor="middle" font-family="Arial" fill="white" x="220" y="78" font-size="54" font-weight="bold">
+      <animateColor attributeName="fill" from="white" to="steelblue" begin="1" dur="1" fill="freeze"/>stone</text>
+
+   <g fill="white" transform="translate(0,8)">
+      <text font-family="Arial" x="330" y="47" font-size="18" font-weight="bold">Agile</text>
+      <text font-family="Arial" x="330" y="62" font-size="18" font-weight="bold">Application</text>
+      <text font-family="Arial" x="330" y="77" font-size="18" font-weight="bold">Framework</text>
+	  <animateColor attributeName="fill" from="white" to="black" begin="1" dur="1" fill="freeze"/>
+   </g>
+</svg>
